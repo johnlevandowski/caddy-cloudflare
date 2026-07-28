@@ -1,0 +1,33 @@
+# adapted from https://hub.docker.com/_/caddy
+services:
+  caddy:
+    image: ghcr.io/johnlevandowski/caddy-cloudflare:latest
+    container_name: caddy
+    hostname: caddy
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    environment:
+#      - CLOUDFLARE_API_TOKEN=ENV_CLOUDFLARE_API_TOKEN
+      - ACME_AGREE=true
+      - LANDOMAIN=wsl.lan.johnl.dev
+      - TSDOMAIN=wsl.ts.johnl.dev
+    volumes:
+      - ./site:/srv
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    secrets:
+      - CLOUDFLARE_API_TOKEN
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+secrets:
+  CLOUDFLARE_API_TOKEN:
+    file: CLOUDFLARE_API_TOKEN

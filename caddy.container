@@ -1,0 +1,30 @@
+# FileName=caddy.container
+[Unit]
+Description=Caddy Container
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=ghcr.io/johnlevandowski/caddy-cloudflare:latest
+HostName=caddy
+
+PublishPort=80:80
+PublishPort=443:443
+PublishPort=443:443/udp
+
+AddCapability=NET_ADMIN
+
+Environment=ACME_AGREE=true LANDOMAIN=wsl.lan.johnl.dev TSDOMAIN=wsl.ts.johnl.dev
+
+Volume=./site:/srv
+Volume=./Caddyfile:/etc/caddy/Caddyfile
+Volume=caddy_data:/data
+Volume=caddy_config:/config
+
+Secret=CLOUDFLARE_API_TOKEN
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
