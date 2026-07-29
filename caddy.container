@@ -12,14 +12,12 @@ PublishPort=80:80
 PublishPort=443:443
 PublishPort=443:443/udp
 
-AddCapability=NET_ADMIN
+Environment=ACME_AGREE=true LANDOMAIN=lan.example.com TSDOMAIN=ts.example.com
 
-Environment=ACME_AGREE=true LANDOMAIN=wsl.lan.johnl.dev TSDOMAIN=wsl.ts.johnl.dev
-
-Volume=./site:/srv
-Volume=./Caddyfile:/etc/caddy/Caddyfile
-Volume=caddy_data:/data
-Volume=caddy_config:/config
+Volume=/home/john/Documents/GitHub/caddy-cloudflare/site/:/srv:z
+Volume=/home/john/Documents/GitHub/caddy-cloudflare/Caddyfile:/etc/caddy/Caddyfile:z
+Volume=caddy_data:/data:z
+Volume=caddy_config:/config:z
 
 Secret=CLOUDFLARE_API_TOKEN
 

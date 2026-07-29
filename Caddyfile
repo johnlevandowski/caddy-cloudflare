@@ -9,6 +9,11 @@
 }
 
 *.{$LANDOMAIN}, *.{$TSDOMAIN} {
+	@cockpit host cockpit.{$LANDOMAIN} cockpit.{$TSDOMAIN}
+	handle @cockpit {
+		reverse_proxy host.containers.internal:9090
+	}
+		
 	@test host test.{$LANDOMAIN} test.{$TSDOMAIN}
 	handle @test {
 		respond "This is a test, proving that Caddy is running :)"
