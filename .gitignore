@@ -2,3 +2,4 @@
 .DS_Store
 .env
 CLOUDFLARE_API_TOKEN
+github-desktop-sync.bat
